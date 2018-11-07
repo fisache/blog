@@ -1,7 +1,8 @@
-from .post import PostResource
+from .post import PostResource, PostManage
 from .post_schema import PostSchema
 
 __all__ = [
+    'PostSchema',
     'PostResource',
-    'PostSchema'
+    'PostManage',
 ]
