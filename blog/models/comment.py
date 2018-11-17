@@ -1,15 +1,15 @@
 import uuid
 from blog.extensions import db
-from sqlalchemy_utils.types import UUIDType
-
+from sqlalchemy.sql import func
 class Comment(db.Model):
     """Basic comment model
     """
 
-    # TODO(inki.hwang) created date
-    id = db.Column(UUIDType, primary_key=True, default=uuid.uuid4)
-    contents = db.Column(db.Text, nullable=False)
-    post_id = db.Column(UUIDType, db.ForeignKey('post.id'))
+    id = db.Column(db.String, default=lambda: str(uuid.uuid4()), primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    time_created = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    time_updated = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    post_id = db.Column(db.String, db.ForeignKey('post.id'))
 
     def __init__(self, **kwargs):
         super(Comment, self).__init__(**kwargs)
